@@ -41,5 +41,7 @@ android.apptheme = @android:style/Theme.NoTitleBar.Fullscreen
 android.accept_sdk_license = True
 
 # ---- python-for-android ----
-p4a.branch = master
+# p4a develop + fix for the broken build-venv pip (PR #3360 / issue #3364)
+p4a.branch = develop
+p4a.commit = d2ee8c54d9d42375a95f18159e950a119671cf63
 p4a.bootstrap = sdl2
