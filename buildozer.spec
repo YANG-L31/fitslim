@@ -37,7 +37,7 @@ android.permissions = INTERNET,ACCESS_NETWORK_STATE,ACTIVITY_RECOGNITION,VIBRATE
 android.allow_backup = True
 android.wakelock = True
 android.presplash_color = #F8FBFF
-android.apptheme = @android:style/Theme.NoTitleBar.Fullscreen
+# android.apptheme = @android:style/Theme.NoTitleBar
 android.accept_sdk_license = True
 
 # ---- python-for-android ----
