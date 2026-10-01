@@ -9,8 +9,8 @@ package.domain = org.fitslim
 source.dir = .
 source.include_exts = py,png,jpg,jpeg,kv,atlas,json,ttf,otf,xml
 source.include_patterns = assets/*,app/*
-source.exclude_dirs = bin,.buildozer,__pycache__,data
-source.exclude_patterns = preview.html,run.bat,*.pyc
+source.exclude_dirs = bin,.buildozer,__pycache__,data,.git,.github
+source.exclude_patterns = preview.html,run.bat,*.pyc,*.md
 
 version = 1.0.0
 
