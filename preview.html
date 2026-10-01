@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>轻食记 · 完整界面预览</title>
+<style>
+  :root{
+    --bg-top:#F8FBFF; --bg-bot:#E9F0F8;
+    --card:#FFFFFF;
+    --ink:#1F2D40; --ink2:#55677E; --muted:#98A6BA;
+    --track:#EDF2F8;
+    --green:#1FAE87; --green-l:#5FD6B2; --green-d:#15876A; --mint:#EAF5F1;
+    --orange:#CB9A6A; --orange-l:#F5EEE6;
+    --blue:#6A9FC6; --blue-l:#EDF3F9;
+    --purple:#918FBE; --purple-l:#F0EFF7;
+    --teal:#4FA8A2; --gold:#E5B472;
+    --pad:20px; --gap:14px;
+    --radius:20px;
+    --shadow:0 6px 16px rgba(24,42,68,.06);
+    --edge:1px solid rgba(24,42,68,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+    background:radial-gradient(1400px 700px at 50% -10%,#eaf1fb,#d3dff0 70%);
+    min-height:100vh;padding:34px;display:flex;gap:34px;align-items:flex-start;overflow-x:auto;
+  }
+  .phone{flex:0 0 400px;width:400px;height:840px;background:var(--bg-bot);border-radius:44px;
+    box-shadow:0 30px 70px rgba(24,42,68,.28);padding:8px;position:relative}
+  .screen{width:100%;height:100%;border-radius:37px;overflow:hidden;position:relative;
+    background:linear-gradient(180deg,var(--bg-top),var(--bg-bot));display:flex;flex-direction:column}
+  .status{height:34px;flex:0 0 34px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 26px;font-size:13px;font-weight:600;color:var(--ink)}
+  .status .right{display:flex;align-items:center;gap:6px}
+  .content{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px var(--pad) 18px;
+    display:flex;flex-direction:column;gap:var(--gap);scrollbar-width:none}
+  .content::-webkit-scrollbar{display:none}
+
+  .title{font-size:24px;font-weight:800;color:var(--ink);line-height:1.2}
+  .subtitle{font-size:12px;color:var(--muted);margin-top:3px}
+  .section{display:flex;align-items:center;justify-content:space-between;height:24px}
+  .section h2{font-size:15.5px;color:var(--ink);font-weight:700}
+  .section a{font-size:12px;color:var(--green);text-decoration:none}
+
+  /* header */
+  .header{height:60px;display:flex;align-items:center;justify-content:space-between}
+  .greet{font-size:12px;color:var(--muted)}
+  .name{font-size:21px;font-weight:700;color:var(--ink);margin-top:2px}
+  .header .actions{display:flex;gap:8px}
+  .icon-chip{width:42px;height:42px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(24,42,68,.10)}
+  .avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:700;background:linear-gradient(160deg,var(--gold),var(--orange));box-shadow:0 8px 16px rgba(255,138,91,.35)}
+
+  /* hero */
+  .hero{height:196px;border-radius:var(--radius);padding:14px;color:#fff;
+    background:linear-gradient(160deg,var(--green-l),var(--green));box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:8px}
+  .hero-top{display:flex;height:116px;gap:6px}
+  .hero-left{flex:1;display:flex;flex-direction:column}
+  .hero-title{font-size:12.5px;color:rgba(255,255,255,.85)}
+  .hero-spacer{flex:1}
+  .hero-sub{font-size:11px;color:rgba(255,255,255,.6)}
+  .hero-value{display:flex;align-items:baseline;gap:4px;height:46px}
+  .hero-value b{font-size:38px;font-weight:700;line-height:46px}
+  .hero-value span{font-size:13px;color:rgba(255,255,255,.85)}
+  .hero-goal{font-size:11px;color:rgba(255,255,255,.6)}
+  .ring{width:112px;height:112px;position:relative;flex:0 0 112px}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ring .pct{font-size:21px;font-weight:700}
+  .ring .pct-label{font-size:10px;color:rgba(255,255,255,.6);margin-top:3px}
+  .divider{height:1px;background:rgba(255,255,255,.26)}
+  .macros{display:flex;gap:12px;height:34px}
+  .macro{flex:1;min-width:0}
+  .macro .row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.9);gap:4px}
+  .macro .row .v{font-size:10.5px;white-space:nowrap}
+  .macro .bar{height:5px;border-radius:3px;background:rgba(255,255,255,.22);margin-top:6px;overflow:hidden}
+  .macro .bar i{display:block;height:100%;border-radius:3px;background:rgba(255,255,255,.95)}
+
+  /* stat cards */
+  .stats{display:flex;gap:var(--gap);height:108px}
+  .stats.sm{height:108px}
+  .stat{flex:1;min-width:0;background:var(--card);border-radius:var(--radius);padding:14px;
+    box-shadow:var(--shadow);border:var(--edge);display:flex;flex-direction:column}
+  .stat .chip{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:0 0 36px;background:var(--mint)}
+  .stat .chip svg{stroke:var(--green)}
+  .stat .value{margin-top:auto;display:flex;align-items:baseline;gap:3px;font-size:20px;font-weight:400;color:var(--ink);line-height:1}
+  .stat .value .unit{font-size:11px;font-weight:400;color:var(--muted)}
+  .stat .label{font-size:12px;font-weight:400;color:var(--muted);margin-top:4px}
+  .chip.purple{background:var(--purple-l)} .chip.orange{background:var(--orange-l)}
+  .chip.blue{background:var(--blue-l)} .chip.green{background:var(--mint)}
+
+  /* goals */
+  .goals{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:var(--edge);display:flex;flex-direction:column;gap:10px}
+  .goal{height:42px;display:flex;flex-direction:column;justify-content:space-between}
+  .goal .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink2)}
+  .goal .row .v{color:var(--muted);font-size:12px}
+  .goal .bar{height:7px;border-radius:4px;background:var(--track);overflow:hidden}
+  .goal .bar i{display:block;height:100%;border-radius:4px}
+
+  /* tip */
+  .tip{height:84px;border-radius:var(--radius);padding:14px;display:flex;gap:12px;align-items:center;
+    background:linear-gradient(150deg,var(--mint),#fff);box-shadow:var(--shadow);border:var(--edge)}
+  .tip .chip{width:42px;height:42px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 42px}
+  .tip .tt{font-size:13.5px;color:var(--ink);font-weight:600}
+  .tip .tb{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+
+  /* segmented */
+  .seg{height:46px;background:var(--track);border-radius:15px;display:flex;padding:4px}
+  .seg div{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);border-radius:12px}
+  .seg div.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 4px 10px rgba(24,42,68,.08)}
+
+  /* form */
+  .form{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:var(--edge);display:flex;flex-direction:column;gap:10px}
+  .field{height:50px;border:1.4px solid var(--track);border-radius:16px;display:flex;align-items:center;padding:0 14px;font-size:14.5px;color:var(--muted)}
+  .btn{height:52px;border-radius:18px;background:linear-gradient(160deg,var(--green-l),var(--green));color:#fff;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 22px rgba(20,195,142,.30)}
+
+  /* list */
+  .list{background:var(--card);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow);border:var(--edge);display:flex;flex-direction:column}
+  .row{height:56px;display:flex;align-items:center;gap:12px;padding:0 6px}
+  .row .chip{width:38px;height:38px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex:0 0 38px}
+  .row .txt{flex:1;min-width:0}
+  .row .t1{font-size:13.5px;color:var(--ink)}
+  .row .t2{font-size:11px;color:var(--muted);margin-top:1px}
+  .row .val{font-size:13px;color:var(--ink2);white-space:nowrap}
+
+  /* chart card */
+  .chartcard{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:var(--edge)}
+  .chartcard .head{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink2);margin-bottom:6px;padding:0 4px}
+  .chartcard .head .r{color:var(--green)} .chartcard .head .o{color:var(--orange)}
+  .xlabels{display:flex;font-size:10px;color:var(--muted);margin-top:4px}
+  .xlabels span{flex:1;text-align:center}
+
+  /* profile */
+  .pcard{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:var(--edge);display:flex;gap:14px;align-items:center}
+  .pavatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(160deg,var(--gold),var(--orange));color:#fff;font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 60px}
+  .pname{font-size:19px;color:var(--ink);font-weight:700}
+  .pmeta{font-size:12px;color:var(--muted);margin-top:3px}
+  .ptarget{font-size:12px;color:var(--green);margin-top:3px}
+
+  .stepper{height:48px;display:flex;align-items:center;justify-content:space-between}
+  .stepper .nm{font-size:13.5px;color:var(--ink2)}
+  .stepper .ctrls{display:flex;align-items:center;gap:14px}
+  .round{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1}
+  .round.minus{background:var(--track);color:var(--ink2)}
+  .round.plus{background:var(--mint);color:var(--green-d)}
+  .stepper .val{width:96px;text-align:center;font-size:15px;color:var(--ink)}
+  .inforow{height:42px;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--ink2)}
+  .inforow .v{font-size:13.5px;color:var(--ink)}
+  .inforow .v.g{color:var(--green)}
+
+  /* popup */
+  .popup{position:absolute;inset:0;background:rgba(15,23,38,.45);display:flex;align-items:center;justify-content:center;z-index:20}
+  .dialog{width:280px;background:var(--card);border-radius:var(--radius);padding:24px 22px 20px;box-shadow:0 12px 34px rgba(24,42,68,.18);display:flex;flex-direction:column;align-items:center}
+  .pchip{width:52px;height:52px;border-radius:50%;background:var(--mint);display:flex;align-items:center;justify-content:center}
+  .ptitle{font-size:16px;color:var(--ink);margin-top:12px}
+  .pline{font-size:14px;color:var(--ink2);margin-top:6px}
+  .pbtn{margin-top:18px;width:100%;height:48px;border-radius:16px;background:linear-gradient(160deg,var(--green-l),var(--green));color:#fff;font-size:15px;font-weight:400;display:flex;align-items:center;justify-content:center}
+
+  /* nav */
+  .nav{flex:0 0 74px;background:#fff;display:flex;align-items:center;box-shadow:0 -8px 24px rgba(24,42,68,.08);position:relative;z-index:5}
+  .nav-item{flex:1;height:56px;margin:0 4px;display:flex;flex-direction:column;align-items:center;position:relative;gap:3px;color:var(--muted)}
+  .nav-item .pill{position:absolute;top:2px;width:48px;height:30px;border-radius:14px}
+  .nav-item .ico{position:relative;z-index:1;margin-top:8px}
+  .nav-item .txt{font-size:10.5px;position:relative;z-index:1}
+  .nav-item.active{color:var(--green-d)}
+  .nav-item.active .pill{background:var(--mint)}
+  .nav-item.active .ico{color:var(--green)}
+</style>
+</head>
+<body>
+
+<!-- SVG icon symbols -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></symbol>
+  <symbol id="i-bars" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+</svg>
+
+<!-- ============================ 首页 ============================ -->
+<div class="phone"><div class="screen">
+  <div class="status"><div>9:41</div><div class="right">
+    <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="#182A44"/><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#182A44"/><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#182A44"/><rect x="13.5" width="3" height="11" rx="1" fill="#182A44" opacity=".35"/></svg>
+    <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 10.5l2-2.2a3 3 0 0 0-4 0l2 2.2z" fill="#182A44"/><path d="M8 5.2c1.6 0 3 .6 4.1 1.6" stroke="#182A44" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M8 1.2c2.7 0 5.1 1 6.8 2.7" stroke="#182A44" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+    <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#182A44" opacity=".4" fill="none"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#182A44"/><rect x="23" y="4" width="2" height="4" rx="1" fill="#182A44" opacity=".4"/></svg>
+  </div></div>
+  <div class="content">
+    <div class="header">
+      <div><div class="greet">早上好，</div><div class="name">小美</div></div>
+      <div class="actions">
+        <div class="icon-chip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6B82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bell"/></svg></div>
+        <div class="avatar">小</div>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-left">
+          <div class="hero-title">今日热量</div><div class="hero-spacer"></div>
+          <div class="hero-sub">还可摄入</div>
+          <div class="hero-value"><b>520</b><span>kcal</span></div>
+          <div class="hero-goal">目标 1600 kcal</div>
+        </div>
+        <div class="ring">
+          <svg width="112" height="112"><circle cx="56" cy="56" r="50" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="12"/><circle cx="56" cy="56" r="50" fill="none" stroke="rgba(255,255,255,.96)" stroke-width="12" stroke-linecap="round" stroke-dasharray="213.6 314.16"/></svg>
+          <div class="center"><div class="pct">68%</div><div class="pct-label">已摄入</div></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="macros">
+        <div class="macro"><div class="row"><span>碳水</span><span class="v">132/200 g</span></div><div class="bar"><i style="width:66%"></i></div></div>
+        <div class="macro"><div class="row"><span>蛋白</span><span class="v">61/90 g</span></div><div class="bar"><i style="width:68%"></i></div></div>
+        <div class="macro"><div class="row"><span>脂肪</span><span class="v">34/55 g</span></div><div class="bar"><i style="width:62%"></i></div></div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="chip purple"><svg width="18" height="18" fill="none" stroke="#918FBE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-scale"/></svg></div><div class="value">65.4<span class="unit">kg</span></div><div class="label">体重</div></div>
+      <div class="stat"><div class="chip orange"><svg width="18" height="18" fill="none" stroke="#CB9A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-activity"/></svg></div><div class="value">32<span class="unit">min</span></div><div class="label">运动</div></div>
+      <div class="stat"><div class="chip blue"><svg width="18" height="18" fill="none" stroke="#6A9FC6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-drop"/></svg></div><div class="value">1.2<span class="unit">L</span></div><div class="label">喝水</div></div>
+    </div>
+    <div class="section"><h2>今日目标</h2><a href="#">查看全部</a></div>
+    <div class="goals">
+      <div class="goal"><div class="row"><span>步数</span><span class="v">6200 / 8000</span></div><div class="bar"><i style="width:77.5%;background:var(--blue)"></i></div></div>
+      <div class="goal"><div class="row"><span>饮水量</span><span class="v">1.2 / 2.0 L</span></div><div class="bar"><i style="width:60%;background:var(--teal)"></i></div></div>
+      <div class="goal"><div class="row"><span>运动</span><span class="v">32 / 45 分钟</span></div><div class="bar"><i style="width:71%;background:var(--orange)"></i></div></div>
+      <div class="goal"><div class="row"><span>睡眠</span><span class="v">7.2 / 8.0 小时</span></div><div class="bar"><i style="width:90%;background:var(--purple)"></i></div></div>
+    </div>
+    <div class="tip"><div class="chip"><svg width="20" height="20" fill="none" stroke="#1FAE87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-target"/></svg></div>
+      <div><div class="tt">今日小贴士</div><div class="tb">多喝水有助于提升代谢，下午加餐可以选一小把坚果。</div></div></div>
+  </div>
+  <div class="popup">
+    <div class="dialog">
+      <div class="pchip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1FAE87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-target"/></svg></div>
+      <div class="ptitle">温馨提示</div>
+      <div class="pline">减肥要慢慢来</div>
+      <div class="pline">不要伤害身体</div>
+      <div class="pbtn">我知道了</div>
+    </div>
+  </div>
+  <div class="nav">
+    <div class="nav-item active"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg><div class="txt">首页</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-plus"/></svg><div class="txt">记录</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"/></svg><div class="txt">趋势</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-user"/></svg><div class="txt">我的</div></div>
+  </div>
+</div></div>
+
+<!-- ============================ 记录 ============================ -->
+<div class="phone"><div class="screen">
+  <div class="status"><div>9:41</div><div class="right"><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#182A44" opacity=".4" fill="none"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#182A44"/></svg></div></div>
+  <div class="content">
+    <div><div class="title">记录</div><div class="subtitle">记录今天的饮食、体重与运动</div></div>
+    <div class="stats sm">
+      <div class="stat"><div class="chip orange"><svg width="18" height="18" fill="none" stroke="#CB9A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-flame"/></svg></div><div class="value">1080<span class="unit">kcal</span></div><div class="label">已摄入</div></div>
+      <div class="stat"><div class="chip green"><svg width="18" height="18" fill="none" stroke="#1FAE87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-activity"/></svg></div><div class="value">260<span class="unit">kcal</span></div><div class="label">已消耗</div></div>
+      <div class="stat"><div class="chip blue"><svg width="18" height="18" fill="none" stroke="#6A9FC6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-drop"/></svg></div><div class="value">1.2<span class="unit">L</span></div><div class="label">饮水</div></div>
+    </div>
+    <div class="seg"><div class="on">饮食</div><div>体重</div><div>运动</div><div>喝水</div></div>
+    <div class="form">
+      <div class="field">食物名称，如：燕麦粥</div>
+      <div class="field">热量 (kcal)</div>
+      <div class="btn">添加饮食</div>
+    </div>
+    <div class="section"><h2>今日记录</h2></div>
+    <div class="list">
+      <div class="row"><div class="chip green"><svg width="18" height="18" fill="none" stroke="#1FAE87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-activity"/></svg></div><div class="txt"><div class="t1">力量训练</div><div class="t2">19:30</div></div><div class="val">12 分钟</div></div>
+      <div class="row"><div class="chip orange"><svg width="18" height="18" fill="none" stroke="#CB9A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-flame"/></svg></div><div class="txt"><div class="t1">苹果</div><div class="t2">18:20</div></div><div class="val">+160 kcal</div></div>
+      <div class="row"><div class="chip blue"><svg width="18" height="18" fill="none" stroke="#6A9FC6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-drop"/></svg></div><div class="txt"><div class="t1">喝水</div><div class="t2">16:00</div></div><div class="val">+400 ml</div></div>
+      <div class="row"><div class="chip orange"><svg width="18" height="18" fill="none" stroke="#CB9A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-flame"/></svg></div><div class="txt"><div class="t1">无糖酸奶</div><div class="t2">15:40</div></div><div class="val">+120 kcal</div></div>
+      <div class="row"><div class="chip blue"><svg width="18" height="18" fill="none" stroke="#6A9FC6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-drop"/></svg></div><div class="txt"><div class="t1">喝水</div><div class="t2">13:00</div></div><div class="val">+400 ml</div></div>
+    </div>
+  </div>
+  <div class="nav">
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg><div class="txt">首页</div></div>
+    <div class="nav-item active"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-plus"/></svg><div class="txt">记录</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"/></svg><div class="txt">趋势</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-user"/></svg><div class="txt">我的</div></div>
+  </div>
+</div></div>
+
+<!-- ============================ 趋势 ============================ -->
+<div class="phone"><div class="screen">
+  <div class="status"><div>9:41</div><div class="right"><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#182A44" opacity=".4" fill="none"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#182A44"/></svg></div></div>
+  <div class="content">
+    <div><div class="title">趋势</div><div class="subtitle">看看你的变化曲线</div></div>
+    <div class="stats sm">
+      <div class="stat"><div class="chip green"><svg width="18" height="18" fill="none" stroke="#1FAE87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-trend"/></svg></div><div class="value">2.4<span class="unit">kg</span></div><div class="label">本周减重</div></div>
+      <div class="stat"><div class="chip orange"><svg width="18" height="18" fill="none" stroke="#CB9A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-flame"/></svg></div><div class="value">1490<span class="unit">kcal</span></div><div class="label">平均摄入</div></div>
+      <div class="stat"><div class="chip purple"><svg width="18" height="18" fill="none" stroke="#918FBE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-target"/></svg></div><div class="value">5/7<span class="unit">天</span></div><div class="label">达标天数</div></div>
+    </div>
+    <div class="section"><h2>体重趋势</h2></div>
+    <div class="chartcard">
+      <div class="head"><span>近 7 天 (kg)</span><span class="r">当前 65.4</span></div>
+      <svg width="100%" viewBox="0 0 300 150" preserveAspectRatio="none" height="150">
+        <line x1="8" y1="18" x2="292" y2="18" stroke="rgba(24,42,68,.06)"/>
+        <line x1="8" y1="74" x2="292" y2="74" stroke="rgba(24,42,68,.06)"/>
+        <line x1="8" y1="130" x2="292" y2="130" stroke="rgba(24,42,68,.06)"/>
+        <polygon points="8,38 55,50 103,59 150,74 197,77 245,92 292,110 292,130 8,130" fill="rgba(20,195,142,.16)"/>
+        <polyline points="8,38 55,50 103,59 150,74 197,77 245,92 292,110" fill="none" stroke="#1FAE87" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <g fill="#1FAE87"><circle cx="8" cy="38" r="3.6"/><circle cx="55" cy="50" r="3.6"/><circle cx="103" cy="59" r="3.6"/><circle cx="150" cy="74" r="3.6"/><circle cx="197" cy="77" r="3.6"/><circle cx="245" cy="92" r="3.6"/><circle cx="292" cy="110" r="3.6"/></g>
+      </svg>
+      <div class="xlabels"><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>今天</span></div>
+    </div>
+    <div class="section"><h2>热量摄入</h2></div>
+    <div class="chartcard">
+      <div class="head"><span>近 7 天 (kcal)</span><span class="o">目标 1600</span></div>
+      <svg width="100%" viewBox="0 0 300 150" preserveAspectRatio="none" height="150">
+        <line x1="8" y1="74" x2="292" y2="74" stroke="rgba(24,42,68,.06)"/>
+        <line x1="8" y1="130" x2="292" y2="130" stroke="rgba(24,42,68,.06)"/>
+        <g fill="rgba(76,154,255,.85)">
+          <rect x="18" y="44" width="20" height="86" rx="10"/><rect x="58" y="35" width="20" height="95" rx="10"/>
+          <rect x="99" y="48" width="20" height="82" rx="10"/><rect x="140" y="33" width="20" height="97" rx="10"/>
+          <rect x="180" y="39" width="20" height="91" rx="10"/><rect x="221" y="52" width="20" height="78" rx="10"/>
+          <rect x="261" y="69" width="20" height="61" rx="10"/>
+        </g>
+        <line x1="8" y1="39" x2="292" y2="39" stroke="#CB9A6A" stroke-width="1.6" stroke-dasharray="6 4"/>
+      </svg>
+      <div class="xlabels"><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>今天</span></div>
+    </div>
+  </div>
+  <div class="nav">
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg><div class="txt">首页</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-plus"/></svg><div class="txt">记录</div></div>
+    <div class="nav-item active"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"/></svg><div class="txt">趋势</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-user"/></svg><div class="txt">我的</div></div>
+  </div>
+</div></div>
+
+<!-- ============================ 我的 ============================ -->
+<div class="phone"><div class="screen">
+  <div class="status"><div>9:41</div><div class="right"><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#182A44" opacity=".4" fill="none"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#182A44"/></svg></div></div>
+  <div class="content">
+    <div class="title">我的</div>
+    <div class="pcard">
+      <div class="pavatar">小</div>
+      <div><div class="pname">小美</div><div class="pmeta">BMI 24.0 · 身高 165cm · 26岁</div><div class="ptarget">目标体重 58.0 kg</div></div>
+    </div>
+    <div class="section"><h2>目标设置</h2></div>
+    <div class="goals" style="gap:0">
+      <div class="stepper"><span class="nm">目标体重</span><div class="ctrls"><span class="round minus">−</span><span class="val">58.0 kg</span><span class="round plus">+</span></div></div>
+      <div class="stepper"><span class="nm">每日热量</span><div class="ctrls"><span class="round minus">−</span><span class="val">1600 kcal</span><span class="round plus">+</span></div></div>
+      <div class="stepper"><span class="nm">每日饮水</span><div class="ctrls"><span class="round minus">−</span><span class="val">2.00 L</span><span class="round plus">+</span></div></div>
+      <div class="stepper"><span class="nm">每日运动</span><div class="ctrls"><span class="round minus">−</span><span class="val">45 分钟</span><span class="round plus">+</span></div></div>
+    </div>
+    <div class="section"><h2>身体数据</h2></div>
+    <div class="goals" style="gap:0;padding:10px 16px">
+      <div class="inforow"><span>身高</span><span class="v">165 cm</span></div>
+      <div class="inforow"><span>起始体重</span><span class="v">68.0 kg</span></div>
+      <div class="inforow"><span>当前体重</span><span class="v">65.4 kg</span></div>
+      <div class="inforow"><span>目标体重</span><span class="v g">58.0 kg</span></div>
+    </div>
+    <div class="section"><h2>更多</h2></div>
+    <div class="list">
+      <div class="row"><div class="chip blue"><svg width="18" height="18" fill="none" stroke="#6A9FC6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bell"/></svg></div><div class="txt"><div class="t1">提醒设置</div><div class="t2">喝水 · 运动 · 打卡</div></div></div>
+      <div class="row"><div class="chip purple"><svg width="18" height="18" fill="none" stroke="#918FBE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bars"/></svg></div><div class="txt"><div class="t1">数据导出</div><div class="t2">导出为 CSV</div></div></div>
+      <div class="row"><div class="chip green"><svg width="18" height="18" fill="none" stroke="#1FAE87" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-user"/></svg></div><div class="txt"><div class="t1">关于轻食记</div><div class="t2">版本 1.0</div></div></div>
+    </div>
+  </div>
+  <div class="nav">
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg><div class="txt">首页</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-plus"/></svg><div class="txt">记录</div></div>
+    <div class="nav-item"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chart"/></svg><div class="txt">趋势</div></div>
+    <div class="nav-item active"><div class="pill"></div><svg class="ico" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-user"/></svg><div class="txt">我的</div></div>
+  </div>
+</div></div>
+
+</body>
+</html>
