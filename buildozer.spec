@@ -15,7 +15,7 @@ source.exclude_patterns = preview.html,run.bat,*.pyc,*.md
 version = 1.0.0
 
 # ---- 依赖 ----
-requirements = python3,kivy
+requirements = python3==3.11.5,kivy==2.3.1
 
 # ---- 显示 / 方向 ----
 orientation = portrait
